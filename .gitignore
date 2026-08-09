@@ -1,6 +1,8 @@
 node_modules/
 .claude/
 android/local.properties
+android/*.jks
+android/*.keystore
 android/app/*.jks
 android/app/*.keystore
 android/keystore.properties
@@ -10,4 +12,5 @@ android/.gradle/
 android/captures/
 *.apk
 *.aab
+store-assets/
 .DS_Store
