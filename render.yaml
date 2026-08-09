@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: tictactoe-server
+    env: node
+    plan: free
+    buildCommand: "npm install --production"
+    startCommand: "node server.js"

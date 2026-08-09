@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Icon Generator — Tic Tac Toe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Archivo', sans-serif; background: #FBF5E6; color: #0d0d0d; padding: 2rem 1rem; min-height: 100vh; }
+    h1 { font-family: 'Archivo', sans-serif; font-weight: 900; text-transform: uppercase; color: #0d0d0d; font-size:1.6rem; margin-bottom:0.3rem; }
+    p.sub { color:#6b6656; font-size:0.85rem; margin-bottom:2rem; font-weight: 600; }
+    .card { background:#fff; border:3px solid #0d0d0d; box-shadow: 5px 5px 0 0 #0d0d0d; border-radius:16px; padding:1.8rem; margin-bottom:1.5rem; }
+    .card h2 { font-family:'Archivo',sans-serif; font-weight: 800; text-transform: uppercase; color:#0d0d0d; font-size:1rem; margin-bottom:1rem; }
+    .preview-grid { display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-end; margin-bottom:1.2rem; }
+    .preview-item { text-align:center; }
+    .preview-item canvas { display:block; border:2px solid #0d0d0d; border-radius:8px; }
+    .preview-item span { display:block; font-size:0.7rem; color:#6b6656; margin-top:0.3rem; font-weight: 700; }
+    .btn-row { display:flex; flex-wrap:wrap; gap:0.7rem; }
+    .btn {
+      font-family:'Archivo',sans-serif; font-size:0.8rem; font-weight:800; letter-spacing:0.02em; text-transform: uppercase;
+      padding:0.6rem 1.4rem; border:3px solid #0d0d0d; border-radius:12px;
+      background:#fff; color:#0d0d0d; cursor:pointer; transition:all 0.15s; box-shadow: 3px 3px 0 0 #0d0d0d;
+    }
+    .btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 0 #0d0d0d; }
+    .btn.primary { background: #FFC107; font-size:0.9rem; padding:0.75rem 2rem; }
+    .status { margin-top:1rem; font-size:0.82rem; color:#6b6656; min-height:1.2em; font-weight: 600; }
+    .step { display:flex; gap:0.8rem; align-items:flex-start; margin-bottom:0.9rem; }
+    .step-num { background:#FFC107; color:#0d0d0d; border: 2px solid #0d0d0d; font-family:'Archivo',sans-serif; font-weight:900; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.85rem; }
+    .step-text { font-size:0.85rem; line-height:1.6; color:#333; padding-top:0.2rem; font-weight: 500; }
+    code { background:#FFF3D6; padding:0.1rem 0.4rem; border-radius:4px; font-family:monospace; font-size:0.8rem; color:#0d0d0d; }
+  </style>
+</head>
+<body>
+
+<h1>Icon & Asset Generator</h1>
+<p class="sub">Generate all icons needed for Google Play Store, Apple App Store, and PWA</p>
+
+<!-- App Icon -->
+<div class="card">
+  <h2>App Icon — All Sizes</h2>
+  <div class="preview-grid" id="icon-previews"></div>
+  <div class="btn-row">
+    <button class="btn primary" onclick="downloadAllIcons()">⬇ Download All App Icons</button>
+  </div>
+  <p class="status" id="icon-status"></p>
+</div>
+
+<!-- Feature Graphic -->
+<div class="card">
+  <h2>Play Store Feature Graphic (1024 × 500)</h2>
+  <canvas id="feature-canvas" width="1024" height="500" style="width:100%;max-width:600px;border:1px solid rgba(201,168,76,0.25);border-radius:8px;display:block;margin-bottom:1rem;"></canvas>
+  <button class="btn" onclick="downloadFeature()">⬇ Download Feature Graphic</button>
+</div>
+
+<!-- App Store Banner -->
+<div class="card">
+  <h2>App Store Icon (1024 × 1024)</h2>
+  <canvas id="appstore-canvas" width="1024" height="1024" style="width:180px;border:1px solid rgba(201,168,76,0.25);border-radius:12px;display:block;margin-bottom:1rem;"></canvas>
+  <button class="btn" onclick="downloadAppStoreIcon()">⬇ Download App Store Icon (1024×1024)</button>
+</div>
+
+<!-- Instructions -->
+<div class="card">
+  <h2>What to do with these files</h2>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text">Click <strong>Download All App Icons</strong> above. Save each file into a new folder called <code>icons/</code> inside your <code>tictactoe/</code> folder.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text">Download the <strong>Feature Graphic</strong> — you'll upload this to the Play Store listing (Store presence → Graphics).</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text">Download the <strong>App Store Icon (1024×1024)</strong> — you'll upload this to App Store Connect under App Information → App icon.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-text">Open a terminal in the <code>tictactoe/</code> folder and run <code>npm install</code> to install Capacitor.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-text">Run <code>npm run add:android</code> to generate the Android project. Open Android Studio, build a signed AAB, upload to Play Console.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-text">For iOS (requires a Mac + Xcode): run <code>npm run add:ios</code>, then <code>npm run open:ios</code>, sign the app in Xcode, archive it, and upload via Xcode Organizer to App Store Connect.</div>
+  </div>
+</div>
+
+<script>
+// ── Icon SVG design ──────────────────────────────────────────────────────────
+const ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#FBF5E6"/>
+  <rect x="18" y="18" width="476" height="476" rx="98" fill="none" stroke="#0d0d0d" stroke-width="18"/>
+  <g stroke="#0d0d0d" stroke-width="16" stroke-linecap="round">
+    <line x1="256" y1="72"  x2="256" y2="440"/>
+    <line x1="72"  y1="256" x2="440" y2="256"/>
+  </g>
+  <g stroke="#F9513D" stroke-width="26" stroke-linecap="round">
+    <line x1="112" y1="112" x2="192" y2="192"/>
+    <line x1="192" y1="112" x2="112" y2="192"/>
+  </g>
+  <g stroke="#F9513D" stroke-width="26" stroke-linecap="round">
+    <line x1="320" y1="320" x2="400" y2="400"/>
+    <line x1="400" y1="320" x2="320" y2="400"/>
+  </g>
+  <circle cx="360" cy="152" r="42" fill="none" stroke="#2E5BFF" stroke-width="24"/>
+  <circle cx="152" cy="360" r="42" fill="none" stroke="#2E5BFF" stroke-width="24"/>
+</svg>`;
+
+// ── Sizes needed ─────────────────────────────────────────────────────────────
+const ICON_SIZES = [72,96,128,144,152,180,192,384,512];
+
+// ── Render SVG → Canvas ──────────────────────────────────────────────────────
+function svgToCanvas(svgStr, w, h) {
+  return new Promise(resolve => {
+    const canvas = document.createElement('canvas');
+    canvas.width  = w;
+    canvas.height = h;
+    const ctx  = canvas.getContext('2d');
+    const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+    const url  = URL.createObjectURL(blob);
+    const img  = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      resolve(canvas);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(canvas); };
+    img.src = url;
+  });
+}
+
+function download(canvas, filename) {
+  const a = document.createElement('a');
+  a.download = filename;
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+
+// ── Build previews on load ───────────────────────────────────────────────────
+async function buildPreviews() {
+  const grid = document.getElementById('icon-previews');
+  const previewSizes = [48, 96, 192, 512];
+  for (const s of previewSizes) {
+    const c = await svgToCanvas(ICON_SVG, s, s);
+    c.style.cssText = `width:${Math.min(s,96)}px;height:${Math.min(s,96)}px;`;
+    const wrap = document.createElement('div');
+    wrap.className = 'preview-item';
+    const label = document.createElement('span');
+    label.textContent = `${s}×${s}`;
+    wrap.appendChild(c);
+    wrap.appendChild(label);
+    grid.appendChild(wrap);
+  }
+}
+
+// ── Download all icons ───────────────────────────────────────────────────────
+async function downloadAllIcons() {
+  const status = document.getElementById('icon-status');
+  status.textContent = 'Generating icons…';
+  let done = 0;
+  for (const s of ICON_SIZES) {
+    const c = await svgToCanvas(ICON_SVG, s, s);
+    download(c, `icon-${s}.png`);
+    done++;
+    status.textContent = `Downloaded ${done} / ${ICON_SIZES.length}… (save each to tictactoe/icons/)`;
+    await new Promise(r => setTimeout(r, 180));
+  }
+  status.textContent = `✓ All ${ICON_SIZES.length} icons downloaded. Save them into tictactoe/icons/`;
+}
+
+// ── Feature graphic (1024×500) ───────────────────────────────────────────────
+async function buildFeatureGraphic() {
+  const canvas = document.getElementById('feature-canvas');
+  const ctx    = canvas.getContext('2d');
+  const W = 1024, H = 500;
+
+  // Cream dotted background
+  ctx.fillStyle = '#FBF5E6';
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#d8d2bc';
+  for (let x = 11; x < W; x += 22) { for (let y = 11; y < H; y += 22) { ctx.beginPath(); ctx.arc(x, y, 1.4, 0, Math.PI*2); ctx.fill(); } }
+
+  // Draw icon on left
+  const iconCanvas = await svgToCanvas(ICON_SVG, 300, 300);
+  ctx.drawImage(iconCanvas, 80, 100, 300, 300);
+
+  // Divider line
+  ctx.strokeStyle = '#0d0d0d';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(430, 60); ctx.lineTo(430, H - 60); ctx.stroke();
+
+  // Title text
+  ctx.textBaseline = 'top';
+  ctx.font = '900 62px Archivo, sans-serif';
+  ctx.fillStyle = '#F9513D';
+  ctx.fillText('TIC ', 460, 120);
+  const ticW = ctx.measureText('TIC ').width;
+  ctx.fillStyle = '#0d0d0d';
+  ctx.fillText('TAC ', 460 + ticW, 120);
+  const tacW = ctx.measureText('TAC ').width;
+  ctx.fillStyle = '#2E5BFF';
+  ctx.fillText('TOE', 460 + ticW + tacW, 120);
+
+  ctx.fillStyle = '#6b6656';
+  ctx.font = '800 26px Archivo, sans-serif';
+  ctx.fillText('A PREMIUM INDIE SHOWDOWN', 460, 210);
+
+  // Horizontal rule
+  ctx.strokeStyle = '#0d0d0d';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(460, 260); ctx.lineTo(960, 260); ctx.stroke();
+
+  ctx.fillStyle = '#333';
+  ctx.font = '600 22px Archivo, sans-serif';
+  ctx.fillText('2 Player • Online Multiplayer • Unbeatable AI', 460, 285);
+  ctx.fillText('Built with love for the Rohingya community', 460, 320);
+}
+
+// ── App Store icon (1024×1024) ───────────────────────────────────────────────
+async function buildAppStoreIcon() {
+  const out = await svgToCanvas(ICON_SVG, 1024, 1024);
+  const dest = document.getElementById('appstore-canvas');
+  dest.getContext('2d').drawImage(out, 0, 0, 1024, 1024);
+}
+
+function downloadFeature() {
+  download(document.getElementById('feature-canvas'), 'feature-graphic-1024x500.png');
+}
+
+function downloadAppStoreIcon() {
+  download(document.getElementById('appstore-canvas'), 'appstore-icon-1024x1024.png');
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+buildPreviews();
+buildFeatureGraphic();
+buildAppStoreIcon();
+</script>
+</body>
+</html>

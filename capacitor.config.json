@@ -1,0 +1,25 @@
+{
+  "appId": "com.rohingyacommunity.tictactoe",
+  "appName": "Tic Tac Toe",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#FBF5E6",
+      "androidSplashResourceName": "splash",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    }
+  },
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#FBF5E6"
+  },
+  "ios": {
+    "backgroundColor": "#FBF5E6"
+  }
+}

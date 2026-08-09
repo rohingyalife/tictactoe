@@ -1,0 +1,26 @@
+{
+  "name": "tictactoe-rohingya",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe — A premium indie showdown. Built with love for the Rohingya community.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "add:android": "npx cap add android",
+    "add:ios":     "npx cap add ios",
+    "sync":        "npx cap sync",
+    "open:android":"npx cap open android",
+    "open:ios":    "npx cap open ios",
+    "build:android":"npx cap sync android && npx cap open android"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli":     "^6.0.0",
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/ios":     "^6.0.0"
+  },
+  "keywords": ["tictactoe", "game", "rohingya", "multiplayer", "mobile", "pwa"],
+  "author": "Your Name",
+  "license": "MIT"
+}
